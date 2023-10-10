@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,15 +20,25 @@ public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
 
+    ImageView showSrcImageView;
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentSecondBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        // Inflate the layout for this fragment
+        View fragmentSecondLayout = inflater.inflate(R.layout.fragment_second, container, false);
+        // Get the count text view
+        showSrcImageView = fragmentSecondLayout.findViewById(R.id.image_view);
 
+        return fragmentSecondLayout;
+
+    }
+
+    private void viewImage(View view) {
+        showSrcImageView.setImageResource(R.drawable.tweety);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -43,11 +55,18 @@ public class SecondFragment extends Fragment {
         }
         TextView randomView = view.getRootView().findViewById(R.id.textview_random);
         randomView.setText(randomNumber.toString());
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.previous_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(SecondFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
+            }
+        });
+
+        view.findViewById(R.id.image_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewImage(view);
             }
         });
     }
